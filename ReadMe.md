@@ -14,7 +14,7 @@ To get a local copy up and running, follow the steps in Setup below.
 
 ### Prerequisites
 Basic knowledge of HTML, CSS. React
-
+k
 
 
 ```bash
