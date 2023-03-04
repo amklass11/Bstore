@@ -1,16 +1,15 @@
-const CHECK_STATUS = 'bookstore/categories/CHECK_STATUS';
+const CHECK = 'bookstore/Category/CHECK';
 
-export const checkStatus = () => ({ type: CHECK_STATUS });
+export function checkStatus() {
+  return { type: CHECK };
+}
 
-const initialState = [];
-
-const reducer = (state = initialState, action) => {
+export default function reducer(state = {}, action = {}) {
   switch (action.type) {
-    case CHECK_STATUS:
-      return 'Under construction';
+    case CHECK:
+      return 'Under Construction';
+
     default:
       return state;
   }
-};
-
-export default reducer;
+}
