@@ -5,9 +5,8 @@ import { addBook } from '../redux/books/books';
 
 export function Form() {
   const empty = {
-    title: '',
+    bookTitle: '',
     author: '',
-    category: '',
   };
 
   const [book, setBook] = useState(empty);
@@ -17,7 +16,7 @@ export function Form() {
   const bookTitleHandler = (e) => {
     setBook({
       ...book,
-      title: e.target.value,
+      bookTitle: e.target.value,
     });
   };
 
@@ -28,25 +27,16 @@ export function Form() {
     });
   };
 
-  const categoryHandler = (e) => {
-    setBook({
-      ...book,
-      category: e.target.value,
-    });
-  };
-
   const onSubmit = (e) => {
     e.preventDefault();
     const author = (book.author || '').trim();
-    const title = (book.title || '').trim();
-    const { category } = book;
+    const bookTitle = (book.bookTitle || '').trim();
 
-    if (author !== '' && title !== '' && category !== '') {
+    if (author !== '' && bookTitle !== '') {
       const book = {
         id: uuid(),
-        title,
+        bookTitle,
         author,
-        category,
       };
 
       dispatch(addBook(book));
@@ -58,18 +48,12 @@ export function Form() {
   };
 
   return (
-    <div className="form-container">
-      <h2 className="h2-form">ADD NEW BOOK</h2>
-      <form className="inputs">
-        <input id="title" type="text" placeholder="Book title" value={book.title} onChange={bookTitleHandler} />
-        <input id="author" type="text" placeholder="Author" value={book.author} onChange={authorHandler} />
-        <select value={book.category} onChange={categoryHandler}>
-          <option value="">Category</option>
-          <option value="Action">Action</option>
-          <option value="Science Fiction">Science Fiction</option>
-          <option value="Economy">Economy</option>
-        </select>
-        <button className="add white-font" type="submit" onClick={onSubmit}>ADD BOOK</button>
+    <div>
+      <h2>ADD NEW BOOK</h2>
+      <form>
+        <input id="title" type="text" placeholder="Book title" value={book.bookTitle} onChange={bookTitleHandler} />
+        <input type="text" placeholder="Author" value={book.author} onChange={authorHandler} />
+        <button type="submit" onClick={onSubmit}>ADD BOOK</button>
       </form>
     </div>
   );
