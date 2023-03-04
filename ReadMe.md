@@ -53,7 +53,6 @@
 
 ## 🚀 Live Demo <a name="live-demo"></a>
 
-- [Live Demo Link](https://the-normal-one1.github.io/bookstore/)
 
 ## 🚀 Project Details
 
