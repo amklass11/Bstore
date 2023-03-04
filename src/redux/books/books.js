@@ -1,43 +1,42 @@
-import { v4 as uuidv4 } from 'uuid';
+import { v4 as uuid } from 'uuid';
 
-const ADD = 'bookstore/Book/ADD';
-const REMOVE = 'bookstore/Book/REMOVE';
+const ADD_BOOK = 'bookstore/books/ADD_BOOK';
+const REMOVE_BOOK = 'bookstore/books/REMOVE_BOOK';
 
 const initialState = [
   {
-    id: uuidv4(),
-    title: 'The Hunger Game',
-    author: 'Suzanne Collins',
+    id: uuid(),
+    bookTitle: 'book 1',
+    author: 'author 1',
   },
   {
-    id: uuidv4(),
-    title: 'Dune',
-    author: 'Frank Herbert',
-  },
-  {
-    id: uuidv4(),
-    title: 'Capital in the Twenty-First Century',
-    author: 'Suzanne Collins',
+    id: uuid(),
+    bookTitle: 'book 2',
+    author: 'author 2',
   },
 ];
 
-export function addBook(book) {
-  return { type: ADD, book };
-}
+export const addBook = (book) => ({
+  type: ADD_BOOK,
+  book,
+});
 
-export function removeBook(id) {
-  return { type: REMOVE, id };
-}
+export const removeBook = (id) => ({
+  type: REMOVE_BOOK,
+  id,
+});
 
-export default function reducer(state = initialState, action = {}) {
+const reducer = (state = initialState, action) => {
   switch (action.type) {
-    case ADD:
+    case ADD_BOOK:
       return [...state, action.book];
 
-    case REMOVE:
+    case REMOVE_BOOK:
       return [...state].filter((book) => book.id !== action.id);
 
     default:
       return state;
   }
-}
+};
+
+export default reducer;
