@@ -1,42 +1,46 @@
-import { apiAddBook, apiGetBooks, apiRemoveBook } from '../../modules/api';
+import { addBookApi, getBookApi, removeBookApi } from '../../Api/booksApi';
 
-const ADD = 'bookstore/Book/ADD';
-const GET = 'bookstore/Book/GET';
-const REMOVE = 'bookstore/Book/REMOVE';
+const ADD_BOOK = 'bookstore/books/ADD_BOOK';
+const REMOVE_BOOK = 'bookstore/books/REMOVE_BOOK';
+const GET_BOOK = 'bookstore/books/GET_BOOK';
+
+const initialState = [];
 
 export const addBook = (payload) => async (dispatch) => {
-  const book = { ...payload, item_id: payload.id, category: 'category' };
-  await apiAddBook(book);
-  dispatch({ type: ADD, book });
-};
-
-export const getBooks = () => async (dispatch) => {
-  const data = await apiGetBooks();
-  const books = Object.keys(data).map((key) => {
-    const book = data[key][0];
-    book.id = key;
-    return book;
-  });
-  dispatch({ type: GET, books });
+  const book = { ...payload, item_id: payload.id };
+  await addBookApi(book);
+  dispatch({ type: ADD_BOOK, book });
 };
 
 export const removeBook = (id) => async (dispatch) => {
-  await apiRemoveBook(id);
-  dispatch({ type: REMOVE, id });
+  await removeBookApi(id);
+  dispatch({ type: REMOVE_BOOK, id });
 };
 
-export default function reducer(state = [], action = {}) {
+export const getBook = () => async (dispatch) => {
+  const data = await getBookApi();
+  const books = Object.keys(data).map((id) => {
+    const book = data[id][0];
+    book.id = id;
+    return book;
+  });
+  dispatch({ type: GET_BOOK, books });
+};
+
+const reducer = (state = initialState, action) => {
   switch (action.type) {
-    case ADD:
+    case ADD_BOOK:
       return [...state, action.book];
 
-    case GET:
-      return action.books;
-
-    case REMOVE:
+    case REMOVE_BOOK:
       return [...state].filter((book) => book.id !== action.id);
+
+    case GET_BOOK:
+      return action.books;
 
     default:
       return state;
   }
-}
+};
+
+export default reducer;
